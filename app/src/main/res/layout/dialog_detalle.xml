@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/parked_car"
+        android:padding="15dp"
+        android:alpha="0.5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DETALLES"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/icons"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp">
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/styleText"
+            android:text="Nombre: Parqueo Central" />
+
+        <TextView
+            android:id="@+id/address"
+            style="@style/styleText"
+            android:text="Direccion: Calle Camargo"/>
+        <TextView
+            android:id="@+id/attention"
+            style="@style/styleText"
+            android:text="Atencion: 8:00 a 18:00"/>
+
+        <TextView
+            android:id="@+id/space"
+            style="@style/styleText"
+            android:text="Espacios libres: 5"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
