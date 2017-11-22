@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -32,6 +31,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
@@ -85,7 +86,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Parkins> parkingCloser;
     private CoordinatorLayout coordinatorLayout;
     private Parkins ClickParking;
-    private FloatingActionButton floatingActionButton;
+    //private FloatingActionButton floatingActionButton;
+    private FloatingActionMenu floatingActionMenu;
     private AlertDialog Closers;
 
     @Override
@@ -102,7 +104,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
         if (status == ConnectionResult.SUCCESS) {
-            floatingActionButton = findViewById(R.id.fab);
+            floatingActionMenu = findViewById(R.id.fab_menu);
+
+
+            FloatingActionButton programFab1 = findViewById(R.id.fab_remove);
+            programFab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
+            //programFab1.setImageResource(R.drawable.eraser);
+            //programFab1.setLabelText("prueba");
+            //floatingActionMenu.addMenuButton(programFab1);
+
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
@@ -112,12 +122,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             dialog.show();
         }
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AddPariknCloser();
-            }
-        });
+//        fab_closer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AddPariknCloser();
+//            }
+//        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -192,10 +207,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //clase que calcula la localizacion
     public class Localizacion implements LocationListener {
         FragmentActivity activityNyam;
-
-        public FragmentActivity getActivityNyam() {
-            return activityNyam;
-        }
 
         public void setActivityNyam(FragmentActivity activityNyam) {
             this.activityNyam = activityNyam;
@@ -358,7 +369,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .geodesic(true));
 
                         if (ClickParking != null) {
-                            Snackbar.make(coordinatorLayout, "Tiempo a tardar:  "+
+                            Snackbar.make(floatingActionMenu, "Tiempo a tardar:  "+
                                     response.body().getRoutes().get(i).getLegs().get(i).getDuration().getText(), 5000)
                                     .setAction("INFO", new View.OnClickListener() {
                                         @Override
