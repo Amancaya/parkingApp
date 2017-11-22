@@ -14,6 +14,7 @@ public class Parkins implements Serializable {
     private String name;
     private boolean status;
     private String working_hours;
+    private Visitors visitors;
 
     private String kilometros;
     private String tiempo;
@@ -22,6 +23,14 @@ public class Parkins implements Serializable {
 
     public String getKilometros() {
         return kilometros;
+    }
+
+    public Visitors getVisitors() {
+        return visitors;
+    }
+
+    public void setVisitors(Visitors visitors) {
+        this.visitors = visitors;
     }
 
     public void setKilometros(String kilometros) {
