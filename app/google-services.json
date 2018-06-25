@@ -8,6 +8,105 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:524793348672:android:8b58ebe73133f037",
+        "android_client_info": {
+          "package_name": "com.grupo_ciencia.parkingadminapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524793348672-4vqb4okn9v3b1a95259vqlqe8nfb79u2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo_ciencia.parkingadminapp",
+            "certificate_hash": "952d69ed8a8795ebc7196324d2fbb4698313f3b1"
+          }
+        },
+        {
+          "client_id": "524793348672-e1aqaivgdkqpn31im4sh62p6j8q1mtrd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo_ciencia.parkingadminapp",
+            "certificate_hash": "d6a00885d0eec2f1883ff444e7f09ca461e0ca6d"
+          }
+        },
+        {
+          "client_id": "524793348672-k7mbncc1qtbsptngave7fvgsnb8k9rqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo_ciencia.parkingadminapp",
+            "certificate_hash": "2754c6e2ae911139de6cab3ff6945a46530f5e83"
+          }
+        },
+        {
+          "client_id": "524793348672-pqts4gjh7hkkvomobs7qqa0mblts52da.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grupo_ciencia.parkingadminapp",
+            "certificate_hash": "731483b444cbd40d3677f0d310068fdca977cc59"
+          }
+        },
+        {
+          "client_id": "524793348672-to2qn8gt78mpfhlob588resqoo8i3jpr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIiS3s1kG9X2E3YHyVo8kauoz-gL9WAG0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524793348672-to2qn8gt78mpfhlob588resqoo8i3jpr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524793348672:android:d517e08a3dff98a8",
+        "android_client_info": {
+          "package_name": "org.nativescript.myApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524793348672-to2qn8gt78mpfhlob588resqoo8i3jpr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIiS3s1kG9X2E3YHyVo8kauoz-gL9WAG0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:524793348672:android:4bbfd918d5b6c563",
         "android_client_info": {
           "package_name": "software.kaya.com.parkingapp"
@@ -15,11 +114,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "524793348672-6s5hhqeppq83cp4bpj1cjvrvcanernt3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "software.kaya.com.parkingapp",
+            "certificate_hash": "d6a00885d0eec2f1883ff444e7f09ca461e0ca6d"
+          }
+        },
+        {
           "client_id": "524793348672-onk6t35bc0ks5frqt0nh3di1jrfdf4qm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "software.kaya.com.parkingapp",
             "certificate_hash": "2e6d92cc5f3662afabec42ec67aab48d68c1af36"
+          }
+        },
+        {
+          "client_id": "524793348672-mvtm8dgn6id6jj3f8im8122k871vieqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "software.kaya.com.parkingapp",
+            "certificate_hash": "6879c3d347c9800a48ed1c5b15d6624a5b56ed6d"
           }
         },
         {

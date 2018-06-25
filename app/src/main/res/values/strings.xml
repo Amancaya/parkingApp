@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ParkingApp</string>
     <string name="title_activity_maps">Map</string>
+    <string name="fab_closer">Mas cercanos</string>
+    <string name="fab_visit">Mas visitados</string>
+    <string name="fab_color">Colores</string>
 </resources>

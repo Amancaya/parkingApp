@@ -1,6 +1,8 @@
 package software.kaya.com.parkingapp.Modelo;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by root on 03-10-17.
@@ -14,23 +16,23 @@ public class Parkins implements Serializable {
     private String name;
     private boolean status;
     private String working_hours;
-    private Visitors visitors;
+    private HashMap<String, String> visit;
 
     private String kilometros;
     private String tiempo;
 
     public Parkins() {}
 
+    public HashMap<String, String> getVisit() {
+        return visit;
+    }
+
+    public void setVisit(HashMap<String, String> visit) {
+        this.visit = visit;
+    }
+
     public String getKilometros() {
         return kilometros;
-    }
-
-    public Visitors getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(Visitors visitors) {
-        this.visitors = visitors;
     }
 
     public void setKilometros(String kilometros) {

@@ -55,6 +55,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
@@ -65,11 +66,12 @@ import software.kaya.com.parkingapp.AdapterLista;
 import software.kaya.com.parkingapp.Dialog.DialogDetalle;
 import software.kaya.com.parkingapp.Modelo.CollectionRoutes;
 import software.kaya.com.parkingapp.Modelo.Parkins;
+import software.kaya.com.parkingapp.Modelo.Visitors;
 import software.kaya.com.parkingapp.R;
 import software.kaya.com.parkingapp.RetrofitMaps;
 import software.kaya.com.parkingapp.ServiceMaps;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     public static final String TAG = "Map";
     private static final String PARKING_NODE = "parking";
@@ -94,7 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         dialog = new SpotsDialog(this, "Cargando...");
         parkinsList = new ArrayList<>();
         markerList = new ArrayList<>();
@@ -104,14 +105,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
         if (status == ConnectionResult.SUCCESS) {
+
             floatingActionMenu = findViewById(R.id.fab_menu);
-
-
-            FloatingActionButton programFab1 = findViewById(R.id.fab_remove);
-            programFab1.setButtonSize(FloatingActionButton.SIZE_NORMAL);
-            //programFab1.setImageResource(R.drawable.eraser);
-            //programFab1.setLabelText("prueba");
-            //floatingActionMenu.addMenuButton(programFab1);
+            floatingActionMenu.setClosedOnTouchOutside(true);
 
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
@@ -122,12 +118,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             dialog.show();
         }
 
-//        fab_closer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AddPariknCloser();
-//            }
-//        });
+        FloatingActionButton button_closer, button_most_visit, button_remove;
+
+        button_closer = findViewById(R.id.fab_button_closer);
+        button_closer.setOnClickListener(this);
+
+        button_most_visit = findViewById(R.id.fab_button_most_visit);
+        button_most_visit.setOnClickListener(this);
+
+        button_remove = findViewById(R.id.fab_button_remove);
+        button_remove.setOnClickListener(this);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (polyline != null) polyline.remove();
+        databaseReference = null;
     }
 
     /**
@@ -202,6 +202,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
         mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) Local);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fab_button_closer:
+                AddPariknCloser();
+                floatingActionMenu.close(true);
+                break;
+            case R.id.fab_button_most_visit:
+                Closers = createSimpleDialog(false);
+                Closers.show();
+                floatingActionMenu.close(true);
+                break;
+            case R.id.fab_button_remove:
+                if (polyline != null) polyline.remove();
+                floatingActionMenu.close(true);
+                break;
+        }
     }
 
     //clase que calcula la localizacion
@@ -273,7 +292,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()){
                     Log.e(TAG, dataSnapshot.toString());
+                    //Visitors visitors = dataSnapshot.child("visitors").getValue(Visitors.class);
+                    //Log.e(TAG, String.valueOf(dataSnapshot.child("visitors")));
+                    HashMap<String, String> visit = (HashMap<String, String>) dataSnapshot.child("visitors").getValue();
                     Parkins parkins = dataSnapshot.getValue(Parkins.class);
+                    parkins.setVisit(visit);
                     parkinsList.add(parkins);
                     AddMarkerToMap(parkins, false);
                 }
@@ -282,7 +305,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.exists()){
+                    HashMap<String, String> visit = (HashMap<String, String>) dataSnapshot.child("visitors").getValue();
                     Parkins parkins = dataSnapshot.getValue(Parkins.class);
+                    parkins.setVisit(visit);
                     for (int i = 0; i<markerList.size(); i++ ){
                         if (markerList.get(i).getTitle().equals(parkins.getName())){
                             try {
@@ -458,21 +483,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return poly;
     }
 
-    public AlertDialog createSimpleDialog() {
+    public AlertDialog createSimpleDialog(boolean isParkingCloser) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_list, null);
-        ListView listView = (ListView) v.findViewById(R.id.lista);
-        if (parkingCloser!= null && !parkingCloser.isEmpty())
-            listView.setAdapter(new AdapterLista(this, SortList(parkingCloser)));
+        ListView listView = v.findViewById(R.id.lista);
+        if (parkingCloser!= null && !parkingCloser.isEmpty() && isParkingCloser)
+            listView.setAdapter(new AdapterLista(this, SortListByCloser(parkingCloser)));
+        else if (parkinsList != null)
+            listView.setAdapter(new AdapterLista(this, SortListByVisits(parkinsList)));
         builder.setView(v);
         builder.setTitle("PARKINGS MAS CERCANOS");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView latitude = (TextView) view.findViewById(R.id.latitude);
-                TextView longitud = (TextView) view.findViewById(R.id.longitud);
+                TextView latitude = view.findViewById(R.id.latitude);
+                TextView longitud = view.findViewById(R.id.longitud);
                 LatLng destiny = new LatLng(Double.parseDouble(latitude.getText().toString()), Double.parseDouble(longitud.getText().toString()));
                 CalculateDistance(miUbicacion, destiny);
                 Closers.dismiss();
@@ -498,12 +525,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private synchronized void ShowList(){
         if (countChilds == controlChild){
             dialog.dismiss();
-            Closers = createSimpleDialog();
+            Closers = createSimpleDialog(true);
             Closers.show();
         }
     }
 
-    private List<Parkins> SortList(List<Parkins> parkinsList){
+    private List<Parkins> SortListByCloser(List<Parkins> parkinsList){
         for (int i = 0 ; i < parkinsList.size() - 1 ; i++) {
             int min = i;
 
@@ -519,6 +546,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Parkins parkins = parkinsList.get(i);
                 parkinsList.set(i, parkinsList.get(min));
                 parkinsList.set(min, parkins);
+            }
+        }
+
+        return parkinsList;
+    }
+
+    private List<Parkins> SortListByVisits(List<Parkins> parkinsList){
+
+        for (int i = 0 ; i < parkinsList.size() - 1 ; i++) {
+            int max = i;
+
+            for (int j = i + 1 ; j < parkinsList.size() ; j++) {
+                int quantity1 = 0, quantity2 = 0;
+                if (parkinsList.get(j).getVisit() != null)  quantity1 = parkinsList.get(j).getVisit().size();
+                if (parkinsList.get(max).getVisit() != null) quantity2 = parkinsList.get(max).getVisit().size();
+
+                if (quantity1 > quantity2) {
+                    max = j;
+                }
+            }
+
+            if (i != max) {
+                Parkins parkins = parkinsList.get(i);
+                parkinsList.set(i, parkinsList.get(max));
+                parkinsList.set(max, parkins);
             }
         }
 

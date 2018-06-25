@@ -1,29 +1,22 @@
 package software.kaya.com.parkingapp.Modelo;
 
+import java.util.List;
+
 /**
  * Created by root on 22-11-17.
  */
 
 public class Visitors {
-    private int quantity;
-    private String date;
+    private List<String> date;
 
     public Visitors() {
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getDate() {
+    public List<String> getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(List<String> date) {
         this.date = date;
     }
 }

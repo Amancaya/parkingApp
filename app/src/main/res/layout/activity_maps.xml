@@ -17,13 +17,33 @@
         fab:menu_labels_position="left">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_remove"
+            android:id="@+id/fab_button_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/eraser"
             style="@style/MenuButtonsSmall"
-            app:fab_label="hola como es!!!"
+            app:fab_label="@string/fab_color"
             />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_button_most_visit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/parked_car"
+            style="@style/MenuButtonsSmall"
+            app:fab_label="@string/fab_visit"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_button_closer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/floating_parking"
+            style="@style/MenuButtonsSmall"
+            app:fab_label="@string/fab_closer"
+            />
+
+
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>
