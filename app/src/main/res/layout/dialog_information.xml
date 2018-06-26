@@ -89,4 +89,31 @@
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/imageView4" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/button_style_go"
+        android:text="Ir"
+        android:textColor="@color/icons"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/ratingBar"
+        tools:layout_editor_absoluteY="149dp" />
+
+    <Button
+        android:layout_width="95dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_style_more"
+        android:text="Detalles"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        tools:layout_editor_absoluteY="148dp" />
+
+
+
+
 </android.support.constraint.ConstraintLayout>
